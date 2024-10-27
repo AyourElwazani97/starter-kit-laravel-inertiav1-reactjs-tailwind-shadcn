@@ -3,7 +3,6 @@ import {
     GalleryVerticalEnd,
     LogOut,
     MoreHorizontal,
-    Settings,
     User,
 } from "lucide-react";
 
@@ -169,6 +168,7 @@ const data = {
 export default function MainLayout({ children }) {
     const { post } = useForm();
     const user = usePage().props.auth.user;
+    console.log(usePage());
     const onLogout = (e) => {
         e.preventDefault();
         post("logout");
@@ -176,7 +176,7 @@ export default function MainLayout({ children }) {
 
     return (
         <>
-        <Head title="Dashboard"/>
+            <Head title="Dashboard" />
             <SidebarProvider>
                 <Sidebar>
                     <SidebarHeader>
@@ -184,7 +184,7 @@ export default function MainLayout({ children }) {
                             <SidebarMenuItem>
                                 <SidebarMenuButton size="lg" asChild>
                                     <a href="#">
-                                        <div className="flex aspect-square size-8 items-center justify-center rounded-lg bg-sidebar-primary text-sidebar-primary-foreground">
+                                        <div className="flex aspect-square size-8 items-center justify-center rounded-full">
                                             <GalleryVerticalEnd className="size-4" />
                                         </div>
                                         <div className="flex flex-col gap-0.5 leading-none">
@@ -239,10 +239,7 @@ export default function MainLayout({ children }) {
                             <Card className="shadow-none">
                                 <CardContent className="grid gap-2.5 p-4">
                                     <form onSubmit={onLogout}>
-                                        <Button
-                                            className="w-full text-sidebar-primary-foreground shadow-none"
-                                            size="sm"
-                                        >
+                                        <Button className="w-full" size="sm">
                                             Log out
                                         </Button>
                                     </form>
@@ -258,8 +255,9 @@ export default function MainLayout({ children }) {
                             <SidebarTrigger className="-ml-1" />
                             <Separator
                                 orientation="vertical"
-                                className="ml-2 h-5 bg-black"
+                                className="mx-2 h-5 bg-black"
                             />
+                            <strong>{user.name}</strong>
                         </div>
                         <div className="cursor-pointer">
                             <DropdownMenu>

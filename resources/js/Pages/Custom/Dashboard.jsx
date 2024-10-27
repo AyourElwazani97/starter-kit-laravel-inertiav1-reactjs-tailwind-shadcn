@@ -9,9 +9,7 @@ const Dashboard = () => {
                     <div className="min-h-[150px] rounded-xl bg-muted/90" />
                     <div className="min-h-[150px] rounded-xl bg-muted/90" />
                 </div>
-                <div className="min-h-[600px] flex-1 rounded-xl bg-muted/85">
-                    Happy coding...
-                </div>
+                <div className="min-h-[600px] flex-1 rounded-xl bg-muted/85"></div>
             </div>
         </MainLayout>
     );
