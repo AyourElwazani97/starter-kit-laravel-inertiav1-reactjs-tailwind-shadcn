@@ -1,39 +1,26 @@
-import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
-import { Head, usePage } from "@inertiajs/react";
+import MainLayout from "@/Layouts/MainLayout";
 
-export default function Dashboard() {
-    const user = usePage().props.auth.user;
+const Dashboard = () => {
     return (
-        <AuthenticatedLayout
-            header={
-                <h2 className="text-xl font-semibold leading-tight text-gray-800">
-                    Dashboard
-                </h2>
-            }
-        >
-            <Head title="Dashboard" />
-
-            <div className="py-12">
-                {!user.email_verified_at && (
-                    <div className="mx-auto max-w-full sm:px-6 lg:px-8">
-                        <div
-                            className="overflow-hidden bg-white shadow-sm sm:rounded-lg
-                         my-2"
-                        >
-                            <div className="p-6 text-red-600 font-bold">
-                                Please verify your email!
-                            </div>
-                        </div>
+        <MainLayout>
+            <div className="flex flex-1 flex-col gap-4 p-4">
+                <div className="grid auto-rows-min gap-4 md:grid-cols-3">
+                    <div className="min-h-[150px] rounded-xl bg-muted/90" />
+                    <div className="min-h-[150px] rounded-xl bg-muted/90" />
+                    <div className="min-h-[150px] rounded-xl bg-muted/90" />
+                </div>
+                {/* grid-cols-1  */}
+                <div className="grid sm:grid-cols-2 lg:grid-cols-6 gap-4 rounded-xl bg-muted/85 p-4">
+                    <div className="col-span-1 sm:col-span-2 lg:col-span-3 min-h-[350px]">
                     </div>
-                )}
-                <div className="mx-auto max-w-full sm:px-6 lg:px-8">
-                    <div className="overflow-hidden bg-white shadow-sm sm:rounded-lg">
-                        <div className="p-6 text-gray-900 font-bold">
-                            You're logged in!
-                        </div>
+                    <div className="col-span-1 sm:col-span-2 lg:col-span-3 min-h-[350px]">
+                    </div>
+                    <div className="w-full lg:col-span-6 sm:col-span-2">
                     </div>
                 </div>
             </div>
-        </AuthenticatedLayout>
+        </MainLayout>
     );
-}
+};
+
+export default Dashboard;

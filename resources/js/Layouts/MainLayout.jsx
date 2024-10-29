@@ -1,8 +1,8 @@
 import {
+    ChevronRight,
     CircleUserRound,
     GalleryVerticalEnd,
     LogOut,
-    MoreHorizontal,
     User,
 } from "lucide-react";
 
@@ -16,12 +16,19 @@ import {
     DropdownMenuSeparator,
     DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import {
+    Collapsible,
+    CollapsibleContent,
+    CollapsibleTrigger,
+} from "@/components/ui/collapsible";
 import { Separator } from "@/components/ui/separator";
 import {
     Sidebar,
     SidebarContent,
     SidebarFooter,
     SidebarGroup,
+    SidebarGroupContent,
+    SidebarGroupLabel,
     SidebarHeader,
     SidebarInset,
     SidebarMenu,
@@ -36,23 +43,15 @@ import { ModeToggle } from "../Components/mode-toggle";
 
 // This is sample data.
 const data = {
+    versions: ["1.0.1", "1.1.0-alpha", "2.0.0-beta1"],
     navMain: [
         {
             title: "Tableau de bord",
-            url: "#",
-            items: [
-                {
-                    title: "Installation",
-                    url: "#",
-                },
-                {
-                    title: "Project Structure",
-                    url: "#",
-                },
-            ],
+            url: "dashboard",
+            items: [],
         },
         {
-            title: "Marketplace",
+            title: "Building Your Application",
             url: "#",
             items: [
                 {
@@ -162,13 +161,22 @@ const data = {
                 },
             ],
         },
+        {
+            title: "Community",
+            url: "#",
+            items: [
+                {
+                    title: "Contribution Guide",
+                    url: "#",
+                },
+            ],
+        },
     ],
 };
 
 export default function MainLayout({ children }) {
     const { post } = useForm();
     const user = usePage().props.auth.user;
-    console.log(usePage());
     const onLogout = (e) => {
         e.preventDefault();
         post("logout");
@@ -198,41 +206,50 @@ export default function MainLayout({ children }) {
                             </SidebarMenuItem>
                         </SidebarMenu>
                     </SidebarHeader>
-                    <SidebarContent>
-                        <SidebarGroup>
-                            <SidebarMenu>
-                                {data.navMain.map((item) => (
-                                    <DropdownMenu key={item.title}>
-                                        <SidebarMenuItem>
-                                            <DropdownMenuTrigger asChild>
-                                                <SidebarMenuButton className="data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground">
-                                                    {item.title}{" "}
-                                                    <MoreHorizontal className="ml-auto" />
-                                                </SidebarMenuButton>
-                                            </DropdownMenuTrigger>
-                                            {item.items?.length ? (
-                                                <DropdownMenuContent
-                                                    side="bottom"
-                                                    align="end"
-                                                    className="min-w-56 rounded-lg"
-                                                >
-                                                    {item.items.map((item) => (
-                                                        <DropdownMenuItem
+                    <SidebarContent className="gap-0">
+                        {/* We create a collapsible SidebarGroup for each parent. */}
+                        {data.navMain.map((item) => (
+                            <Collapsible
+                                key={item.title}
+                                title={item.title}
+                                defaultOpen
+                                className="group/collapsible"
+                            >
+                                <SidebarGroup>
+                                    <SidebarGroupLabel
+                                        asChild
+                                        className="group/label text-sm text-sidebar-foreground hover:bg-sidebar-accent hover:text-sidebar-accent-foreground"
+                                    >
+                                        <CollapsibleTrigger>
+                                            {item.title}{" "}
+                                            <ChevronRight className="ml-auto transition-transform group-data-[state=open]/collapsible:rotate-90" />
+                                        </CollapsibleTrigger>
+                                    </SidebarGroupLabel>
+                                    <CollapsibleContent>
+                                        <SidebarGroupContent>
+                                            <SidebarMenu>
+                                                {item.items.map((item) => (
+                                                    <SidebarMenuItem
+                                                        key={item.title}
+                                                    >
+                                                        <SidebarMenuButton
                                                             asChild
-                                                            key={item.title}
+                                                            isActive={
+                                                                item.isActive
+                                                            }
                                                         >
                                                             <a href={item.url}>
                                                                 {item.title}
                                                             </a>
-                                                        </DropdownMenuItem>
-                                                    ))}
-                                                </DropdownMenuContent>
-                                            ) : null}
-                                        </SidebarMenuItem>
-                                    </DropdownMenu>
-                                ))}
-                            </SidebarMenu>
-                        </SidebarGroup>
+                                                        </SidebarMenuButton>
+                                                    </SidebarMenuItem>
+                                                ))}
+                                            </SidebarMenu>
+                                        </SidebarGroupContent>
+                                    </CollapsibleContent>
+                                </SidebarGroup>
+                            </Collapsible>
+                        ))}
                     </SidebarContent>
                     <SidebarFooter>
                         <div className="p-1">
